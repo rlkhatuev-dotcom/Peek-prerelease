@@ -220,8 +220,8 @@ struct JournalView: View {
         List {
             Section("Всего") {
                 LabeledContent("Занятий", value: "\(store.data.records.count)")
-                LabeledContent("В фокусе",clock(store.data.records.reduce(0) {$0+max(0,$1.totalSeconds-$1.distractionSeconds)}))
-                LabeledContent("Отвлечений",clock(store.data.records.reduce(0) {$0+$1.distractionSeconds}))
+                LabeledContent("В фокусе", value: clock(store.data.records.reduce(0) {$0+max(0,$1.totalSeconds-$1.distractionSeconds)}))
+                LabeledContent("Отвлечений", value: clock(store.data.records.reduce(0) {$0+$1.distractionSeconds}))
             }
             Section("История") {
                 if store.data.records.isEmpty { Text("Пока нет записей").foregroundStyle(.secondary) }
