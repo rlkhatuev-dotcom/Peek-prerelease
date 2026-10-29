@@ -219,7 +219,7 @@ struct JournalView: View {
     var body: some View {
         List {
             Section("Всего") {
-                LabeledContent("Занятий","\(store.data.records.count)")
+                LabeledContent("Занятий", value: "\(store.data.records.count)")
                 LabeledContent("В фокусе",clock(store.data.records.reduce(0) {$0+max(0,$1.totalSeconds-$1.distractionSeconds)}))
                 LabeledContent("Отвлечений",clock(store.data.records.reduce(0) {$0+$1.distractionSeconds}))
             }
