@@ -1,0 +1,19 @@
+workflows:
+  ios-compile-check:
+    name: peek. iOS — compile check (unsigned)
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+    environment:
+      xcode: latest
+    scripts:
+      - name: Install XcodeGen
+        script: brew install xcodegen
+      - name: Generate Xcode project
+        script: xcodegen generate --spec project.yml
+      - name: Compile iOS app without signing
+        script: |
+          set -o pipefail
+          xcodebuild -project Peek.xcodeproj -scheme Peek -configuration Debug -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO build | tee /tmp/peek-build.log
+    artifacts:
+      - /tmp/peek-build.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/Products/Debug-iphonesimulator/*.app
